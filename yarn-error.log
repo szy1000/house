@@ -1,0 +1,45 @@
+Arguments: 
+  /Users/shenzhiyong/.nvm/versions/node/v18.15.0/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js add antd-mobile
+
+PATH: 
+  /Users/shenzhiyong/.rbenv/shims:/Users/shenzhiyong/.rbenv/shims:/Users/shenzhiyong/Library/pnpm:/Users/shenzhiyong/.nvm/versions/node/v18.15.0/bin:/Users/shenzhiyong/development/flutter/bin:/usr/local/maven/apache-maven-3.6.3/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/Library/Apple/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/shenzhiyong/.rbenv/shims:/Users/shenzhiyong/Library/pnpm:/Users/shenzhiyong/.nvm/versions/node/v18.15.0/bin:/Users/shenzhiyong/development/flutter/bin:/usr/local/maven/apache-maven-3.6.3/bin:/Users/shenzhiyong/Library/Android/sdk/emulator:/Users/shenzhiyong/Library/Android/sdk/tools:/Users/shenzhiyong/Library/Android/sdk/tools/bin:/Users/shenzhiyong/Library/Android/sdk/platform-tools:/usr/local/mysql/bin/:/Users/shenzhiyong/Desktop/travel-frontend/node_modules/.bin:/Users/shenzhiyong/Library/Android/sdk/emulator:/Users/shenzhiyong/Library/Android/sdk/tools:/Users/shenzhiyong/Library/Android/sdk/tools/bin:/Users/shenzhiyong/Library/Android/sdk/platform-tools:/usr/local/mysql/bin/:/Users/shenzhiyong/Library/Android/sdk/emulator:/Users/shenzhiyong/Library/Android/sdk/tools:/Users/shenzhiyong/Library/Android/sdk/tools/bin:/Users/shenzhiyong/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.15.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/shenzhiyong/Library/Caches/Yarn/v6/npm-lru-cache-6.0.0-6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94-integrity/node_modules/lru-cache/README.md' -> '/Users/shenzhiyong/Desktop/travel-frontend/node_modules/@typescript-eslint/typescript-estree/node_modules/lru-cache/README.md'
+
+npm manifest: 
+  {
+    "private": true,
+    "author": "szy1000 <1538078053@qq.com>",
+    "scripts": {
+      "dev": "umi dev",
+      "build": "umi build",
+      "postinstall": "umi setup",
+      "setup": "umi setup",
+      "start": "npm run dev"
+    },
+    "dependencies": {
+      "umi": "^4.0.83"
+    },
+    "devDependencies": {
+      "@types/react": "^18.2.28",
+      "@types/react-dom": "^18.2.13",
+      "@umijs/plugins": "^4.0.83",
+      "typescript": "^5.2.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
