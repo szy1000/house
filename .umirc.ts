@@ -3,10 +3,7 @@ import { defineConfig } from "umi";
 export default defineConfig({
   proxy: {
     '/api': {
-      target: 'http://47.96.173.202:9010',
-      // target: 'http://192.168.1.5:9010', //吴海生
-      // target: 'http://192.168.1.107:9010', // 周
-      // target: 'http://192.168.1.53:9010', // 张
+      target: 'http://localhost:7001',
       changeOrigin: true,
       pathRewrite: { '^/api': '/api' },
     },

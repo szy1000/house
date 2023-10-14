@@ -9,6 +9,8 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "antd-mobile": "^5.32.4",
+    "axios": "^1.5.1",
     "umi": "^4.0.83"
   },
   "devDependencies": {
