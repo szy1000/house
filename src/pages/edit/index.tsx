@@ -12,8 +12,9 @@ const Edit = (props) => {
   }, [])
 
 
-  const submit = () => {
-
+  const submit = async () => {
+    const res = await form.validateFields()
+    console.log(res)
   }
   return (
     <div className='edit'>
