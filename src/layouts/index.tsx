@@ -12,21 +12,20 @@ import styles from './index.less'
 const Layout = () => {
   const {pathname} = useLocation()
   const [activeKey, setActiveKey] = useState(pathname)
-  console.log()
 
   const tabs = [
     {
       key: '/',
       title: '首页',
       icon: <AppOutline />,
-      badge: Badge.dot,
+      // badge: Badge.dot,
     },
     {
       key: 'msg',
       title: '消息',
       icon: (active: boolean) =>
         active ? <MessageFill /> : <MessageOutline />,
-      badge: '99+',
+      // badge: '99+',
     },
     {
       key: 'my',

@@ -1,5 +1,5 @@
 import {Button, List, Picker, DatePicker} from 'antd-mobile'
-import yayJpg from '../../assets/yay.jpg';
+import yayJpg from '../../assets/images/yay.jpg';
 import {connect, history} from "umi";
 import styles from './styles.less'
 import dayjs from "dayjs";

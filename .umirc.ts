@@ -8,7 +8,7 @@ export default defineConfig({
       pathRewrite: { '^/api': '/api' },
     },
   },
-  title: 'xxx',
+  title: '商业旅游项目',
   hash: true,
   routes: [
     { path: "/", component: "home" },
