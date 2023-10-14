@@ -16,6 +16,8 @@ export default defineConfig({
     { path: "/my", component: "my" },
     { path: "/login", component: "login", layout: false },
     { path: "/register", component: "register", layout: false },
+    { path: "/protocol", component: "protocol", layout: false },
+    { path: "/edit", component: "edit", layout: false },
   ],
   dva: {},
   plugins: ['@umijs/plugins/dist/dva'],

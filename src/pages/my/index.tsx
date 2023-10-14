@@ -1,5 +1,5 @@
-import {history, connect} from "umi"
-import {Button, Toast, Image} from 'antd-mobile'
+import {history, connect, Link} from "umi"
+import {Button,List, Toast, Image} from 'antd-mobile'
 import {getItem, removeAllItem} from "@/utils/localstorage";
 import {TOKEN} from "@/constants";
 import {useEffect} from "react";
@@ -50,8 +50,16 @@ const My = (props) => {
               <Button onClick={() => history.push('/login')}>登录</Button>
           }
         </div>
+        {
+          username && <Link className='setting' to='/edit'>个人设置</Link>
+        }
       </div>
 
+      <List>
+        <List.Item>订单列表</List.Item>
+        <List.Item>测试连接</List.Item>
+        <List.Item>用户协议</List.Item>
+      </List>
 
       {username && (
         <div className='logout'>
