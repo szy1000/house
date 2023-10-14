@@ -1,12 +1,12 @@
 import {history, connect, Link} from "umi"
-import {Button,List, Toast, Image} from 'antd-mobile'
+import {Button, List, Toast, Image} from 'antd-mobile'
 import {getItem, removeAllItem} from "@/utils/localstorage";
 import {TOKEN} from "@/constants";
 import {useEffect} from "react";
 import './styles.less'
 
 const My = (props) => {
-  const {dispatch, username, avatar} = props
+  const {dispatch, username, sign, avatar} = props
   console.log(props)
   useEffect(() => {
     const token = getItem(TOKEN);
@@ -46,8 +46,12 @@ const My = (props) => {
         />
         <div className='control'>
           {
-            username ? <h2 className='name'>{username}</h2> :
-              <Button onClick={() => history.push('/login')}>登录</Button>
+            username ? (
+              <>
+                <h2 className='name'>{username}</h2>
+                <h3 className='sign'>{sign}</h3>
+              </>
+            ) : <Button onClick={() => history.push('/login')}>登录</Button>
           }
         </div>
         {
