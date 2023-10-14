@@ -12,9 +12,7 @@ const Register = () => {
 
   return (
     <div className={styles.register}>
-      <NavBar
-        onBack={back}
-      >
+      <NavBar onBack={back}>
         注册
       </NavBar>
 

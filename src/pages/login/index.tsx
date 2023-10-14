@@ -16,7 +16,10 @@ const Login = (props) =>  {
     const res = await form.validateFields()
     dispatch({
       type: 'login/loginByPsd',
-      params: res
+      params: res,
+      callback: () => {
+        history.replace('/')
+      }
     })
   }
   return (

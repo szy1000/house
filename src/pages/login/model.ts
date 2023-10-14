@@ -1,4 +1,6 @@
 import {loginByPasswordReq} from './service'
+import {setItem} from "@/utils/localstorage";
+import {TOKEN} from "@/constants";
 
 export default {
   namespace: 'login',
@@ -9,18 +11,19 @@ export default {
     },
   },
   effects: {
-    *loginByPsd({params}, {call, put}) {
+    *loginByPsd({params, callback}, {call, put}) {
       const res = yield call(loginByPasswordReq, params)
       if(res) {
-
+        setItem(TOKEN, res.token)
+        yield put({
+          type: 'save',
+          payload: {
+            ...res
+          }
+        })
+        callback && callback()
       }
-      console.log(res)
-      // yield put({
-      //   type: 'save',
-      //   payload: {
-      //     ...res
-      //   }
-      // })
+
     }
   },
   reducers: {

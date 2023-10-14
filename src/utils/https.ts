@@ -1,5 +1,7 @@
 import axios from 'axios'
 import {Toast} from 'antd-mobile'
+import {getItem} from '@/utils/localstorage'
+import {TOKEN} from '@/constants/index'
 
 const instance = axios.create({
   baseURL: '/api/v1',
@@ -8,6 +10,26 @@ const instance = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+instance.interceptors.request.use(
+  async function (config) {
+    // Do something before request is sent
+    const token = getItem(TOKEN);
+    if(token) {
+      Object.assign(config, {
+        headers: {
+          ...config.headers,
+          token,
+        }
+      })
+    }
+    return config
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  },
+);
 
 
 const isRepeat = {}
