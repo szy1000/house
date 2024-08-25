@@ -1,4 +1,4 @@
-import {NavBar, Form, Button, Input, Toast} from 'antd-mobile'
+import {SafeArea, Form, Button, Input, Toast} from 'antd-mobile'
 import {useState} from 'react';
 import {history, connect,} from "umi";
 import styles from './styles.less'
@@ -9,6 +9,8 @@ import {POWER_STATION_LIST, GRID_CONNECTED_TYPE, PROVINCE_LIST} from './config'
 const Invest = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+  const [params, setParams] = useState({})
+  const [data, setData] = useState([])
 
   const submitForm = async () => {
 
@@ -27,11 +29,19 @@ const Invest = () => {
           num29: params.num29 / 100
         })
         if (res.code === 200) {
-          Toast.clear()
-          history.push('/result', {
-            data: res.data,
-            params
-          })
+          // history.push('/result', {
+          //   data: res.data,
+          //   params
+          // })
+          setData(res.data)
+          setParams(params)
+          setTimeout(() => {
+            window.scrollTo({
+              top: 1400,
+              behavior: 'smooth'
+            })
+            Toast.clear()
+          }, 300)
         } else {
           Toast.show({
             icon: 'fail',
@@ -46,6 +56,30 @@ const Invest = () => {
     }
 
 
+  }
+
+  const calc = () => {
+    let num = 0
+    try {
+      num = parseFloat(data[6]?.value);
+      if(params?.bingType === '全额上网') {
+        if(num > 7) {
+          return '可行'
+        } else {
+          return  '不可行'
+        }
+      } else {
+        if(num > 9) {
+          return '可行'
+        } else {
+          return  '不可行'
+        }
+      }
+
+    } catch (e) {
+      num = 0
+    }
+    return  ''
   }
 
   const formArr = [
@@ -71,7 +105,7 @@ const Invest = () => {
     },
     {label: '屋顶租赁费调整频次', name: 'rent5', unit: '元/次', required: false,},
     {label: '报价/单瓦投资（不含土地费用）', name: 'price', unit: '元/W', required: false, layout: 'vertical'},
-    // {label: '报价/单瓦投资（不含土地费用）', name: 'rent53', unit: '元/W', required: false, layout: 'vertical'},
+    // {label: '土地租金调整频次(年/次)', name: 'rent53', unit: '元/W', required: false, layout: 'vertical'},
   ]
 
 
@@ -210,6 +244,66 @@ const Invest = () => {
           ))
         }
       </Form>
+
+
+      {
+        data.length > 0 && (
+          <div>
+            <div className={styles.result}>
+              <div>
+                <div className={styles.title}>分析结果</div>
+              </div>
+              <div className={styles.score}>
+                <div className={styles.scoreTitle}>总投资收益率： <span>{data[6]?.value}</span></div>
+                <div
+                  className={styles.scoreValue}
+                  style={{
+                    color: calc() === '可行' ? '#00B050' : '#FF0000'
+                  }}
+                >
+                  {calc()}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.resultItem}>
+              <div className={styles.box}>
+                <div className={styles.title}>分析报告</div>
+              </div>
+              {
+                data?.map((v, k) => (
+                  <div
+                    className={styles.item}
+                    key={k}
+                    style={{
+                      display: (k > 9 || k === 0) ? 'none' : 'flex'
+                    }}>
+                    <div className={styles.label}>{v.name}</div>
+                    <div className={styles.val}>{v.value}</div>
+                  </div>
+                ))
+              }
+            </div>
+
+
+            <div className={styles.btn}>
+              <Button
+                color='primary'
+                block
+                onClick={() => {
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  })
+                }}
+              >
+                重新分析
+              </Button>
+            </div>
+          </div>
+        )
+      }
+      <SafeArea position='bottom'/>
     </div>
   );
 }
