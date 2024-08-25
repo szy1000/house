@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "antd-mobile": "^5.32.4",
+    "antd-mobile-icons": "^0.3.0",
     "axios": "^1.5.1",
+    "dayjs": "^1.11.13",
     "umi": "^4.0.83"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@ import {getItem} from '@/utils/localstorage'
 import {TOKEN} from '@/constants/index'
 
 const instance = axios.create({
-  baseURL: '/api/v1',
+  baseURL: '/api',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

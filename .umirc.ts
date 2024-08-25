@@ -3,18 +3,21 @@ import { defineConfig } from "umi";
 export default defineConfig({
   proxy: {
     '/api': {
-      target: 'http://localhost:7001',
+      // target: 'http://localhost:7001',
+      target: 'http://146.56.232.97:8080',
       changeOrigin: true,
       pathRewrite: { '^/api': '/api' },
     },
   },
-  title: '商业旅游项目',
+  title: '宝能计算工具',
   hash: true,
   routes: [
     { path: "/", component: "home" },
     { path: "/msg", component: "msg" },
     { path: "/my", component: "my" },
     { path: "/login", component: "login", layout: false },
+    { path: "/invest", component: "invest", layout: false },
+    { path: "/result", component: "result", layout: false },
     { path: "/register", component: "register", layout: false },
     { path: "/protocol", component: "protocol", layout: false },
     { path: "/edit", component: "edit", layout: false },

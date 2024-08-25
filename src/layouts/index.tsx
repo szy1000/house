@@ -1,6 +1,6 @@
 import {useState} from 'react'
-import { Outlet, useLocation, history } from 'umi';
-import { Badge, TabBar } from 'antd-mobile'
+import {Outlet, useLocation, history} from 'umi';
+import {Badge, SafeArea, TabBar} from 'antd-mobile'
 import {
   AppOutline,
   MessageOutline,
@@ -17,45 +17,57 @@ const Layout = () => {
     {
       key: '/',
       title: '首页',
-      icon: <AppOutline />,
+      icon: <AppOutline/>,
       // badge: Badge.dot,
     },
-    {
-      key: 'msg',
-      title: '消息',
-      icon: (active: boolean) =>
-        active ? <MessageFill /> : <MessageOutline />,
-      // badge: '99+',
-    },
+    // {
+    //   key: 'msg',
+    //   title: '消息',
+    //   icon: (active: boolean) =>
+    //     active ? <MessageFill /> : <MessageOutline />,
+    //   // badge: '99+',
+    // },
     {
       key: 'my',
       title: '我的',
-      icon: <UserOutline />,
+      icon: <UserOutline/>,
     },
   ]
+  // const judgement = () => {
+  //   const isIphone =
+  //
+  //   console.log(11)
+  // }
 
   return (
     <div className={styles.global}>
       <div className={styles.content}>
-        <Outlet />
+        <Outlet/>
       </div>
-      <TabBar
+      <div
         className={styles.navbar}
-        activeKey={activeKey}
-        onChange={e => {
-          setActiveKey(e)
-          history.replace(e)
+        style={{
+          // /iPhone/i.test(navigator.userAgent)
+          paddingBottom:  /iPhone/i.test(navigator.userAgent) ? 20 : 0
         }}
       >
-        {tabs.map(item => (
-          <TabBar.Item
-            key={item.key}
-            icon={item.icon}
-            title={item.title}
-            badge={item?.badge}
-          />
-        ))}
-      </TabBar>
+        <TabBar
+          activeKey={activeKey}
+          onChange={e => {
+            setActiveKey(e)
+            history.replace(e)
+          }}
+        >
+          {tabs.map(item => (
+            <TabBar.Item
+              key={item.key}
+              icon={item.icon}
+              title={item.title}
+              badge={item?.badge}
+            />
+          ))}
+        </TabBar>
+      </div>
     </div>
   );
 }

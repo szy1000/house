@@ -1,4 +1,45 @@
 .home{
+  padding: 15px 0 0 0;
   background-color: #fafbfc;
+
+  .wrapper{
+    padding-left: 15px;
+    display: flex;
+    flex-flow: wrap;
+    gap: 15px;
+
+    .item{
+      padding: 30px 0;
+      border-radius: 19px;
+      background: linear-gradient(180deg, #5B8BEC 0%, #4B77F6 99%);
+      box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+      //height: calc(50% - 45px);
+      //padding-bottom: calc(50% - 15px);
+      flex: 0 0 calc(50% - 15px); /* 每行2个元素，减去左右间距的一半 */
+      box-sizing: border-box;
+      .icon{
+        margin: 0 auto 15px auto;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: #fff;
+        background-image: url("./components/path.png");
+        background-size: 60%;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .name{
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        //line-height: 36px;
+        color: #FFFFFF;
+
+
+
+      }
+    }
+  }
+
   //padding: 20px;
 }
