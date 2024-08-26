@@ -1,6 +1,6 @@
 import {SafeArea, Form, Button, Input, Toast} from 'antd-mobile'
 import {useState} from 'react';
-import {history, connect,} from "umi";
+import {connect} from "umi";
 import styles from './styles.less'
 import BnFormItem from "./components/BnFormItem";
 import {queryAnalysisReq} from './service'
@@ -24,20 +24,21 @@ const Invest = () => {
           content: '加载中…',
         })
         setLoading(true)
+
         const res = await queryAnalysisReq({
           ...params,
-          num29: params.num29 / 100
+          stationType: params.stationType[0],
+          xlsx: `${params.xlsx}.xlsx`,
+          bingType: params.bingType[0],
+          province: params.province[0],
+          // num29: params.num29 / 100
         })
         if (res.code === 200) {
-          // history.push('/result', {
-          //   data: res.data,
-          //   params
-          // })
           setData(res.data)
           setParams(params)
           setTimeout(() => {
             window.scrollTo({
-              top: 1400,
+              top: 860,
               behavior: 'smooth'
             })
             Toast.clear()
@@ -62,36 +63,37 @@ const Invest = () => {
     let num = 0
     try {
       num = parseFloat(data[6]?.value);
-      if(params?.bingType === '全额上网') {
-        if(num > 7) {
+      if (params?.bingType === '全额上网') {
+        if (num > 7) {
           return '可行'
         } else {
-          return  '不可行'
+          return '不可行'
         }
       } else {
-        if(num > 9) {
+        if (num > 9) {
           return '可行'
         } else {
-          return  '不可行'
+          return '不可行'
         }
       }
 
     } catch (e) {
       num = 0
     }
-    return  ''
+    return ''
   }
 
   const formArr = [
-    {label: '装机规模', name: 'capacity', unit: '单位', required: true,},
-    {label: '辐照小时数', name: 'syst', unit: '小时', required: true,},
+    {label: '装机规模', name: 'capacity', unit: 'MV', required: true,},
+    {label: '辐照小时数', name: 'syst', placeholder: '请输入PVsyst查询数据', unit: '小时', required: true,},
     // {label: '报价/单瓦投资(不含土地费用)', name: 'price', unit: '(元/W)', required: true,},
-    {label: '自发自用消纳比例', name: 'num29', unit: '%', required: true,},
+    {label: '自发自用消纳比例', name: 'num29', placeholder: '请输入0-100', unit: '%', required: true,},
     {label: '自用电电价', name: 'num30', unit: '元/kWh', required: true,},
-    {label: '屋顶租赁占用面积', name: 'num49', unit: '亩/m²', required: true,},
-    {label: '屋顶租赁费用', name: 'num50', unit: '元/亩(m²)/年', required: true,},
+    {label: '报价(不含土地费用)', name: 'price', placeholder: '请输入每瓦报价', unit: '元/W', required: true},
+    {label: '屋顶租赁占用面积', name: 'num49', placeholder: '请输入亩or平方米', unit: '亩/m²', required: false,},
+    {label: '屋顶租赁费用', name: 'num50', unit: '元/亩(m²)/年', required: false,},
     // {label: '年租赁费用', name: 'xx', unit: '万元/年', required: true,},
-    {label: '年租赁费用n年一付', name: 'num52', unit: '年', required: true,},
+    {label: '年租赁费用n年一付', name: 'num52', unit: '年', required: false,},
     // {label: '土地使用税征税面积', name: 'num53', unit: 'm²', required: true,},
     // {label: '土地使用税征收标准', name: 'rent54', unit: '元/m²/年', required: true,},
     {
@@ -103,27 +105,34 @@ const Invest = () => {
       max: 100,
       // step: 0.01,
     },
-    {label: '屋顶租赁费调整频次', name: 'rent5', unit: '元/次', required: false,},
-    {label: '报价/单瓦投资（不含土地费用）', name: 'price', unit: '元/W', required: false, layout: 'vertical'},
+    {label: '屋顶租赁费调整频次', name: 'rent5', placeholder: '请输入几年调一次价', unit: '年/次', required: false,},
     // {label: '土地租金调整频次(年/次)', name: 'rent53', unit: '元/W', required: false, layout: 'vertical'},
   ]
 
+  const unitArr = ['', 'MW', '元/Wp', '万元', '万kWh', '万元/年', '', '', '年', '年']
+
 
   return (
-    <div className={styles.invest}>
+    <div
+      className={styles.invest}
+      style={{
+        // /iPhone/i.test(navigator.userAgent)
+        paddingBottom: /iPhone/i.test(navigator.userAgent) ? 20 : 0
+      }}
+    >
       <Form
         form={form}
         initialValues={{
-          "xlsx": "bn-202407-v1.xlsx",
-          "stationType": "屋顶式",
-          "bingType": "自发自用余电上网",
+          "name": "紫东园区光储项目",
+          "xlsx": "bn-202407-v1",
+          "stationType": ["屋顶式"],
+          "bingType": ["自发自用余电上网"],
           "capacity": 3.5,
-          "province": "江苏",
+          "province": ["江苏"],
           "syst": 1351,
           "price": 2.9,
           "num29": 90.00,
           "num30": 0.405,
-          "name": "name",
           "num49": 0,
           "num50": 0,
           "num52": 1,
@@ -154,12 +163,12 @@ const Invest = () => {
         </Form.Item>
 
         <Form.Item
-          label='使用的模版'
+          label='分析版本'
           name='xlsx'
           className={styles.formItem}
           rules={[{required: true, message: '使用的模版不能为空'}]}
         >
-          <Input placeholder='请输入使用的模版' clearable/>
+          <Input disabled placeholder='请输入使用的模版' clearable/>
         </Form.Item>
 
         {/*<Form.Item*/}
@@ -216,9 +225,12 @@ const Invest = () => {
         {/*  }*/}
         {/*</Form.Item>*/}
 
-        <BnFormItem className={styles.formItem} title='场站类型' label='场站类型' name='stationType' columns={POWER_STATION_LIST}/>
-        <BnFormItem className={styles.formItem} title='并网类型' label='并网类型' name='bingType' columns={GRID_CONNECTED_TYPE}/>
-        <BnFormItem className={styles.formItem} title='选择省份' label='电站所在省份' name='province' columns={PROVINCE_LIST}/>
+        <BnFormItem className={styles.formItem} title='场站类型' label='场站类型' name='stationType'
+                    columns={POWER_STATION_LIST}/>
+        <BnFormItem className={styles.formItem} title='并网类型' label='并网类型' name='bingType'
+                    columns={GRID_CONNECTED_TYPE}/>
+        <BnFormItem className={styles.formItem} title='选择省份' label='电站所在省份' name='province'
+                    columns={PROVINCE_LIST}/>
 
 
         <div style={{height: 20, backgroundColor: '#f7f8f9'}}></div>
@@ -238,7 +250,7 @@ const Invest = () => {
                 // pattern="number"
                 {...v}
                 clearable
-                placeholder={`请输入`}
+                placeholder={v.placeholder || `请输入`}
               />
             </Form.Item>
           ))
@@ -251,7 +263,8 @@ const Invest = () => {
           <div>
             <div className={styles.result}>
               <div>
-                <div className={styles.title}>分析结果</div>
+                <div className={styles.title}>分析结果({params?.bingType})</div>
+
               </div>
               <div className={styles.score}>
                 <div className={styles.scoreTitle}>总投资收益率： <span>{data[6]?.value}</span></div>
@@ -264,6 +277,7 @@ const Invest = () => {
                   {calc()}
                 </div>
               </div>
+              <div className="tips">全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行</div>
             </div>
 
             <div className={styles.resultItem}>
@@ -279,7 +293,10 @@ const Invest = () => {
                       display: (k > 9 || k === 0) ? 'none' : 'flex'
                     }}>
                     <div className={styles.label}>{v.name}</div>
-                    <div className={styles.val}>{v.value}</div>
+                    <div>
+                      <div className={styles.val}>{v.value}</div>
+                      {unitArr[k] && <div className={styles.unit}>{unitArr[k]}</div>}
+                    </div>
                   </div>
                 ))
               }
