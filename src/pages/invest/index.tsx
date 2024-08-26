@@ -1,4 +1,4 @@
-import {SafeArea, Form, Button, Input, Toast} from 'antd-mobile'
+import {SafeArea, Form, Button, Input,NumberKeyboard, VirtualInput, Toast} from 'antd-mobile'
 import {useState} from 'react';
 import {connect} from "umi";
 import styles from './styles.less'
@@ -12,11 +12,29 @@ const Invest = () => {
   const [params, setParams] = useState({})
   const [data, setData] = useState([])
 
+  const handleParams = (values) => {
+    for(let key in values) {
+      try {
+        if(['bingType','province','stationType', 'xlsx', 'name'].includes(key)) {
+          return
+        }
+        values[key] = parseFloat(values[key])
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    debugger
+    console.log(values)
+  }
+
   const submitForm = async () => {
+
 
 
     const params = await form.validateFields()
     if (params) {
+      handleParams(params)
 
       try {
         Toast.show({
@@ -24,6 +42,18 @@ const Invest = () => {
           content: '加载中…',
         })
         setLoading(true)
+
+        // capacity
+        // num29
+        // num30:0.405
+        // num49:0
+        // num50:0
+        // num52:1
+        // price:"4.5"
+        // rent55:"4.5"
+        // syst:"4.5"
+
+
 
         const res = await queryAnalysisReq({
           ...params,
@@ -84,7 +114,7 @@ const Invest = () => {
   }
 
   const formArr = [
-    {label: '装机规模', name: 'capacity', unit: 'MV', required: true,},
+    {label: '装机规模', name: 'capacity', unit: 'MW', required: true,},
     {label: '辐照小时数', name: 'syst', placeholder: '请输入PVsyst查询数据', unit: '小时', required: true,},
     // {label: '报价/单瓦投资(不含土地费用)', name: 'price', unit: '(元/W)', required: true,},
     {label: '自发自用消纳比例', name: 'num29', placeholder: '请输入0-100', unit: '%', required: true,},
@@ -117,7 +147,7 @@ const Invest = () => {
       className={styles.invest}
       style={{
         // /iPhone/i.test(navigator.userAgent)
-        paddingBottom: /iPhone/i.test(navigator.userAgent) ? 20 : 0
+        paddingBottom: /iPhone/i.test(navigator.userAgent) ? 30 : 20
       }}
     >
       <Form
@@ -250,7 +280,9 @@ const Invest = () => {
                 // pattern="number"
                 {...v}
                 clearable
+                inputMode='decimal'
                 placeholder={v.placeholder || `请输入`}
+                // keyboard={<NumberKeyboard confirmText='确定' customKey={'.'} />}
               />
             </Form.Item>
           ))
@@ -263,7 +295,7 @@ const Invest = () => {
           <div>
             <div className={styles.result}>
               <div>
-                <div className={styles.title}>分析结果({params?.bingType})</div>
+                <div className={styles.title}>分析结果 <span> ({params?.bingType})</span></div>
 
               </div>
               <div className={styles.score}>
@@ -277,7 +309,7 @@ const Invest = () => {
                   {calc()}
                 </div>
               </div>
-              <div className="tips">全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行</div>
+              <div className={styles.tips}>全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行</div>
             </div>
 
             <div className={styles.resultItem}>
