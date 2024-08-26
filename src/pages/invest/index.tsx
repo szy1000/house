@@ -15,17 +15,21 @@ const Invest = () => {
   const handleParams = (values) => {
     for(let key in values) {
       try {
-        if(['bingType','province','stationType', 'xlsx', 'name'].includes(key)) {
-          return
+        if(!['bingType','province','stationType', 'xlsx', 'name'].includes(key)) {
+          values[key] = parseFloat(values[key])
         }
-        values[key] = parseFloat(values[key])
       } catch (e) {
+        Toast.show({
+          icon: 'fail',
+          content: '请输入正确的数据',
+        })
         console.log(e)
       }
     }
+    return values
 
-    debugger
-    console.log(values)
+    // debugger
+    // console.log(values)
   }
 
   const submitForm = async () => {
@@ -34,7 +38,7 @@ const Invest = () => {
 
     const params = await form.validateFields()
     if (params) {
-      handleParams(params)
+
 
       try {
         Toast.show({
@@ -56,7 +60,8 @@ const Invest = () => {
 
 
         const res = await queryAnalysisReq({
-          ...params,
+          // ...params,
+          ...handleParams(params),
           stationType: params.stationType[0],
           xlsx: `${params.xlsx}.xlsx`,
           bingType: params.bingType[0],
