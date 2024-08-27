@@ -98,7 +98,7 @@ const Invest = () => {
     let num = 0
     try {
       num = parseFloat(data[6]?.value);
-      if (params?.bingType === '全额上网') {
+      if (params?.bingType[0] === '全额上网') {
         if (num > 7) {
           return '可行'
         } else {
