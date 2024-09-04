@@ -93,9 +93,11 @@ const Invest = () => {
   }
 
   const renderResult = (num, level = 7) => {
-    if(num > (level + 2)) {
+    if(num > (level + 6)) {
+      return '可行 +++'
+    } else if(num > (level + 4)) {
       return '可行 ++'
-    } else if(num > (level + 1)) {
+    } else if(num > (level + 2)) {
       return  '可行 +'
     } else if(num > level) {
       return  '可行'
@@ -327,7 +329,7 @@ const Invest = () => {
                   {calc()}
                 </div>
               </div>
-              <div className={styles.tips}>全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行,每个"➕"代表多两个点</div>
+              <div className={styles.tips}>全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行,每个"+"代表多两个点</div>
             </div>
 
             <div className={styles.resultItem}>
