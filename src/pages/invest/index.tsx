@@ -90,8 +90,18 @@ const Invest = () => {
         setLoading(false)
       }
     }
+  }
 
-
+  const renderResult = (num, level = 7) => {
+    if(num > (level + 2)) {
+      return '可行 ++'
+    } else if(num > (level + 1)) {
+      return  '可行 +'
+    } else if(num > level) {
+      return  '可行'
+    } else {
+      return '不可行'
+    }
   }
 
   const calc = () => {
@@ -99,17 +109,20 @@ const Invest = () => {
     try {
       num = parseFloat(data[6]?.value);
       if (params?.bingType[0] === '全额上网') {
-        if (num > 7) {
-          return '可行'
-        } else {
-          return '不可行'
-        }
+        return renderResult(num, 7)
+        // if (num > 7) {
+        //   return '可行'
+        // } else {
+        //   return '不可行'
+        // }
       } else {
-        if (num > 9) {
-          return '可行'
-        } else {
-          return '不可行'
-        }
+        return  renderResult(num, 9)
+
+        // if (num > 9) {
+        //   return '可行'
+        // } else {
+        //   return '不可行'
+        // }
       }
 
     } catch (e) {
@@ -308,13 +321,13 @@ const Invest = () => {
                 <div
                   className={styles.scoreValue}
                   style={{
-                    color: calc() === '可行' ? '#00B050' : '#FF0000'
+                    color: calc().indexOf('可行') === 0 ? '#00B050' : '#FF0000'
                   }}
                 >
                   {calc()}
                 </div>
               </div>
-              <div className={styles.tips}>全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行</div>
+              <div className={styles.tips}>全额上网模式，≥7 %就是可行，其他两种是≥ 9%可行,每个"➕"代表多两个点</div>
             </div>
 
             <div className={styles.resultItem}>
